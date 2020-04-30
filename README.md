@@ -5,17 +5,15 @@ javalangのクラス定義情報をクロステーブル形式で標準出力に
 script-sketch/java/00054-java-特定のクラスに含まれる定数メソッド一覧取得/
 
 # ダウンロード
-  -
+
+[jazdump](https://github.com/ukijumotahaneniarukenia/jazdump/releases/tag/1-0-0)
+
 ```
 unizp nnn-1.0-SNAPSHOT-bin.zip
 
 or
 
 tar xvf nnn-1.0-SNAPSHOT-bin.tar.gz
-
-or
-
-tar xvf nnn-1.0-SNAPSHOT-bin.tar.bz2
 ```
 
 # インストール

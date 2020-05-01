@@ -17,7 +17,7 @@ tar xvf jazdump-1.0-SNAPSHOT-bin.tar.gz
 
 or
 
-tar xvf jazdump-1.0-SNAPSHOT-bin.tar.bz2
+bunzip2 jazdump-1.0-SNAPSHOT-bin.tar.bz2
 ```
 
 # インストール

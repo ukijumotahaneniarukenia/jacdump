@@ -23,7 +23,7 @@ bunzip2 jazdump-1.0-SNAPSHOT-bin.tar.bz2
 # インストール
 
 ```
-echo "alias jazdump=\"$(which java) -jar $(find $(pwd) -name "nnn-1.0-SNAPSHOT.jar")\"">>~/.bashrc
+echo "alias jazdump=\"$(which java) -jar $(find $(pwd) -name "jazdump-1.0-SNAPSHOT.jar")\"">>~/.bashrc
 source ~/.bashrc
 ```
 

@@ -113,20 +113,6 @@ public class App {
         return Arrays.stream(liz).flatMap(e -> e.stream()).collect(Collectors.toList());
     }
 
-    private static Map<String, Set<String>> crossTableCreateTableHeadPreProcess(List<List<String>> ll,Integer endGrpColIdx){
-        int row = ll.size();
-        return IntStream.range(0,row).boxed().collect(Collectors.groupingBy(i->ll.get(i).get(endGrpColIdx-1)
-                ,Collectors.mapping(i->ll.get(i).get(endGrpColIdx),Collectors.toSet())));
-    }
-
-    private static String crossTableCreateTableHeadPostProcess(Map<String, Set<String>> ms,Integer endGrpColIdx){
-        return A1+COL_SEPARATOR+ms.entrySet().stream()
-                .flatMap(e->e.getValue().stream())
-                //項目名を指定した順序で並べる
-                .sorted(Comparator.comparing(e->Arrays.asList(e.split(COL_NAME_SEPARATOR)).subList(0,endGrpColIdx-2).stream().collect(Collectors.joining())))
-                .collect(Collectors.joining(COL_SEPARATOR));
-    }
-
     /**
      *<pre>
      *INPUT:

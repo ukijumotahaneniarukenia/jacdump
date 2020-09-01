@@ -4,7 +4,7 @@ javalangのクラス定義情報をクロステーブル形式で標準出力に
 インストール
 
 ```
-curl -fsSLO https://github.com/ukijumotahaneniarukenia/jacdump/releases/download/2-0-0/jacdump-2-0-0-SNAPSHOT.jar
+curl -fsSLO https://github.com/ukijumotahaneniarukenia/jacdump/releases/download/2-0-0/jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 使い方

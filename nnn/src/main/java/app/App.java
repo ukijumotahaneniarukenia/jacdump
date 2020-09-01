@@ -176,11 +176,15 @@ public class App {
 
     public static void main(String... cmdLineArgs){
 
+        List<String> cmdLineList = new LinkedList<>(Arrays.asList(cmdLineArgs));
+
         String classFileName = System.getProperty("sun.boot.library.path") + "/classlist";
 
         File file = new File(classFileName);
 
-        List<String> classFileList = new LinkedList<>();
+        List<String> classFileList = null;
+        List<String> classFileSystemList = new LinkedList<>();
+        List<String> classFileUserList = new LinkedList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));){
 
@@ -188,7 +192,7 @@ public class App {
 
             while ((classFile = reader.readLine()) != null) {
 
-                classFileList.add(classFile);
+                classFileSystemList.add(classFile);
 
             }
 
@@ -198,8 +202,10 @@ public class App {
 
         }
 
+        classFileList = classFileSystemList;
+
         //出力情報の制御
-        for(String arg : cmdLineArgs){
+        for(String arg : cmdLineList){
             switch (arg){
                 case OPTION_ARGUMENTS_CONSTANT:
                     DEFAULT_OUTPUT = OPTION_ARGUMENTS_CONSTANT;
@@ -208,9 +214,13 @@ public class App {
                     DEFAULT_OUTPUT = OPTION_ARGUMENTS_METHOD;
                     break;
                 default:
-                    classFileList.add(arg);
+                    classFileUserList.add(arg);
                     break;
             }
+        }
+
+        if(classFileUserList.size() != 0){
+            classFileList = classFileUserList;
         }
 
         int cnt = classFileList.size();

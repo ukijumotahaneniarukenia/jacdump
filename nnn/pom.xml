@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>app</groupId>
@@ -19,6 +19,12 @@
   </properties>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.6</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -69,21 +75,6 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <configuration>
-            <archive>
-              <manifest>
-                <mainClass>app.App</mainClass>
-                <!-- Class-Path属性の自動設定 -->
-                <addClasspath>true</addClasspath>
-                <!-- Class-Path属性で"lib/"などprefixを付けたい時に指定 -->
-                <!--                <classpathPrefix>lib</classpathPrefix>-->
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -95,17 +86,26 @@
           <target>11</target>
         </configuration>
       </plugin>
+
+      <!--      fatjarを作成するためのプラグイン　ここから-->
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.3</version>
+        <version>3.1.0</version>
         <configuration>
-          <descriptors>
-            <descriptor>src/assemble/bin.xml</descriptor>
-          </descriptors>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>app.App</mainClass>
+            </manifest>
+          </archive>
         </configuration>
         <executions>
           <execution>
-            <id>make-assembly</id>
+            <id>assemble-all</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
@@ -113,6 +113,7 @@
           </execution>
         </executions>
       </plugin>
+      <!--      fatjarを作成するためのプラグイン　ここまで-->
     </plugins>
   </build>
 </project>

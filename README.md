@@ -9,12 +9,18 @@ curl -fsSLO https://github.com/ukijumotahaneniarukenia/jacdump/releases/download
 
 使い方
 
-引数指定
-- 指定したクラスファイル名が対象
-
-引数未指定
-- システムライブラリに存在するすべてのクラスファイルが対象
-
 ```
+$ java -jar jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar 
+Usageだよーん
+
+java -jar jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar --method
+
+java -jar jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar --list-up
+
+java -jar jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar --method java.lang.ClassLoader java.lang.Thread
+
+java -jar jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar --constant
+
+java -jar jacdump-2-0-0-SNAPSHOT-jar-with-dependencies.jar --constant java.lang.ClassLoader java.lang.Thread
 
 ```

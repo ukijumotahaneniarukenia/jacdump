@@ -50,6 +50,7 @@ public class App {
 
     private static final String OPTION_ARGUMENTS_CONSTANT = "--constant";
     private static final String OPTION_ARGUMENTS_METHOD = "--method";
+    private static final String OPTION_ARGUMENTS_LIST_UP = "--list-up";
     private static String DEFAULT_OUTPUT = OPTION_ARGUMENTS_CONSTANT;
 
     private static List<String> OPTION_USAGE_CLASSFILE_LIST = new LinkedList(){{
@@ -160,6 +161,9 @@ public class App {
                 PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_METHOD +
                 RS +
                 RS +
+                PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_LIST_UP +
+                RS +
+                RS +
                 PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_METHOD + SEPARATOR + OPTION_USAGE_CLASSFILE_LIST.stream().collect(Collectors.joining(SEPARATOR)) +
                 RS +
                 RS +
@@ -174,17 +178,17 @@ public class App {
         System.exit(0);
     }
 
-    public static void main(String... cmdLineArgs){
+    private static boolean isCorrectArg(String arg){
+        return ! arg.contains("java");
+    }
 
-        List<String> cmdLineList = new LinkedList<>(Arrays.asList(cmdLineArgs));
+    private static List<String> getClassFileSystemList(){
+
+        List<String> classFileSystemList = new LinkedList<>();
 
         String classFileName = System.getProperty("sun.boot.library.path") + "/classlist";
 
         File file = new File(classFileName);
-
-        List<String> classFileList = null;
-        List<String> classFileSystemList = new LinkedList<>();
-        List<String> classFileUserList = new LinkedList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));){
 
@@ -202,6 +206,28 @@ public class App {
 
         }
 
+        return classFileSystemList;
+
+    }
+
+    private static void outputClassFileSystemList(){
+
+        getClassFileSystemList().stream().sorted().forEach(classFile->{
+            System.out.println(classFile);
+        });
+
+        System.exit(0);
+
+    }
+
+    public static void main(String... cmdLineArgs){
+
+        List<String> cmdLineList = new LinkedList<>(Arrays.asList(cmdLineArgs));
+
+        List<String> classFileList = null;
+        List<String> classFileSystemList = getClassFileSystemList();
+        List<String> classFileUserList = new LinkedList<>();
+
         classFileList = classFileSystemList;
 
         //出力情報の制御
@@ -213,6 +239,9 @@ public class App {
                 case OPTION_ARGUMENTS_METHOD:
                     DEFAULT_OUTPUT = OPTION_ARGUMENTS_METHOD;
                     break;
+                case OPTION_ARGUMENTS_LIST_UP:
+                    outputClassFileSystemList();
+                    break;
                 default:
                     classFileUserList.add(arg);
                     break;
@@ -221,6 +250,10 @@ public class App {
 
         if(classFileUserList.size() != 0){
             classFileList = classFileUserList;
+        }
+
+        if(classFileList.stream().filter(e->isCorrectArg(e)).count() >= 1L){
+            Usage();
         }
 
         int cnt = classFileList.size();

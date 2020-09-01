@@ -13,6 +13,14 @@ public class App {
 
     private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
+    private static final String PROGRAM_NAME = "jacdump";
+    private static final String PROGRAM_VERSION = "-2-0-0";
+
+    private static final String PROGRAM_CMD = "java -jar";
+    private static final String PROGRAM_SUFFIX = "-SNAPSHOT-jar-with-dependencies.jar";
+
+    private static final String SEPARATOR = " ";
+
     private static final String F = "---";
     private static final String R = "###";
     private static final String C = ",";
@@ -21,8 +29,11 @@ public class App {
     private static final String CLASS_GRP_DIGIT = "%08d";
     private static final String CLASS_GRP_SEQ_DIGIT = "%04d";
 
-    private static final String COLUMN_SEPARATOR = "\t";
+    private static final String FS = "\t";
+    private static final String RS = "\n";
 
+    private static final String CLASSFILE_NAME = "クラス名";
+    private static final String IS_CONSTANT_OR_METHOD_KEY_NAME = "定数かメソッドか";
     private static final String CLASS_NO = "クラス番号";
     private static final String CLASS_NAME = "クラス名";
     private static final String CLASS_SEQ_NO = "クラスシーケンス番号";
@@ -41,8 +52,14 @@ public class App {
     private static final String OPTION_ARGUMENTS_METHOD = "--method";
     private static String DEFAULT_OUTPUT = OPTION_ARGUMENTS_CONSTANT;
 
+    private static List<String> OPTION_USAGE_CLASSFILE_LIST = new LinkedList(){{
+        add("java.lang.ClassLoader");
+        add("java.lang.Thread");
+    }};
 
     private static final List<String> OUTPUT_HEADER_COMMON_COLUMN_NAME_LIST = new LinkedList(){{
+        add(CLASSFILE_NAME);
+        add(IS_CONSTANT_OR_METHOD_KEY_NAME);
         add(CLASS_NO);
         add(CLASS_SEQ_NO);
         add(CLASS_NAME);
@@ -66,7 +83,6 @@ public class App {
         add(ARGS_TYPE_VARIABLE_NAME_LIST);
     }};
 
-    //ここがボトルネック→呼び出し側を直した
     private static List<List<String>> getClassInfo(Integer grp,Map<Class<?>,String> m ) {
 
         List<List<String>> rt = new LinkedList<>();
@@ -137,6 +153,27 @@ public class App {
         return rt;
     }
 
+    private static void Usage(){
+        System.out.println("Usageだよーん" +
+                RS +
+                RS +
+                PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_METHOD +
+                RS +
+                RS +
+                PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_METHOD + SEPARATOR + OPTION_USAGE_CLASSFILE_LIST.stream().collect(Collectors.joining(SEPARATOR)) +
+                RS +
+                RS +
+                PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_CONSTANT +
+                RS +
+                RS +
+                PROGRAM_CMD + SEPARATOR + PROGRAM_NAME + PROGRAM_VERSION + PROGRAM_SUFFIX + SEPARATOR + OPTION_ARGUMENTS_CONSTANT + SEPARATOR + OPTION_USAGE_CLASSFILE_LIST.stream().collect(Collectors.joining(SEPARATOR)) +
+                RS +
+                RS +
+                ""
+        );
+        System.exit(0);
+    }
+
     public static void main(String... cmdLineArgs){
 
         String classFileName = System.getProperty("sun.boot.library.path") + "/classlist";
@@ -175,8 +212,6 @@ public class App {
                     break;
             }
         }
-
-        classFileList = new LinkedList<>(Arrays.asList("java.lang.ClassLoader", "java.lang.Thread"));
 
         int cnt = classFileList.size();
 
@@ -232,18 +267,57 @@ public class App {
             }
         }
 
+        int n = 0;
         for(List<List<String>> summaryList :classInfoMap.values()){
+
+            n++;
+
+            if(n == 1){
+                // ヘッダ行の出力
+
+                if(DEFAULT_OUTPUT == OPTION_ARGUMENTS_CONSTANT){
+
+                    System.out.println(OUTPUT_HEADER_CONSTANT_COLUMN_NAME_LIST.stream().collect(Collectors.joining(FS)));
+
+                }else if(DEFAULT_OUTPUT == OPTION_ARGUMENTS_METHOD){
+
+                    System.out.println(OUTPUT_HEADER_METHOD_COLUMN_NAME_LIST.stream().collect(Collectors.joining(FS)));
+
+                }else{
+
+                    Usage();
+
+                }
+            }
+
             for(List<String> detailList : summaryList){
-                System.out.println(detailList.stream().collect(Collectors.joining(COLUMN_SEPARATOR)));
+
+                if(DEFAULT_OUTPUT == OPTION_ARGUMENTS_CONSTANT){
+
+                    if(detailList.size()==OUTPUT_HEADER_CONSTANT_COLUMN_NAME_LIST.size()){
+                        System.out.println(detailList.stream().collect(Collectors.joining(FS)));
+                    }
+
+                }else if(DEFAULT_OUTPUT == OPTION_ARGUMENTS_METHOD){
+
+                    if(detailList.size()==OUTPUT_HEADER_METHOD_COLUMN_NAME_LIST.size()){
+                        System.out.println(detailList.stream().collect(Collectors.joining(FS)));
+                    }
+
+                }else{
+
+                    Usage();
+
+                }
             }
         }
 
         System.err.printf(
-                "%s\t%s\n" +
-                        "%s\t%s\n" +
-                        "%s\t%s\n" +
-                        "%s\t%s\n" +
-                        "\n"
+                "%s" + FS + "%s" + RS +
+                "%s" + FS + "%s" + RS +
+                "%s" + FS + "%s" + RS +
+                "%s" + FS + "%s" + RS +
+                RS
                 ,"classLoadDoneCnt",classLoadList.size()
                 ,"classLoadSkipCnt",classLoadSkipList.size()
                 ,"classExecuteDoneCnt",classExecuteList.size()
@@ -251,7 +325,7 @@ public class App {
         );
 
         System.err.printf(
-                "%s\t%s\n"
+                "%s" + FS + "%s" + RS
                 ,"classExecuteSkipList",classExecuteSkipList
         );
     }

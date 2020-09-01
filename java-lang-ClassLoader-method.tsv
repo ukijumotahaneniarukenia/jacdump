@@ -1,0 +1,30 @@
+クラス名	定数かメソッドか	クラス番号	クラスシーケンス番号	クラス名	アクセス修飾子	戻り値の型	メソッド名	可変長引数があるか	引数の個数	型パラメータリスト	型パラメータ記号リスト	引数の型リスト	仮引数の変数名リスト
+java.lang.ClassLoader	MMMMM	00000001	0001	java.lang.ClassLoader	public	java.lang.String	toString	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0002	java.lang.ClassLoader	public static	java.io.InputStream	getSystemResourceAsStream	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0003	java.lang.ClassLoader	public	java.lang.Class<?>	loadClass	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0004	java.lang.ClassLoader	public	boolean	equals	false	1			java.lang.Object	arg0
+java.lang.ClassLoader	MMMMM	00000001	0005	java.lang.ClassLoader	public static	java.net.URL	getSystemResource	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0006	java.lang.ClassLoader	public static	java.lang.ClassLoader	getSystemClassLoader	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0007	java.lang.ClassLoader	public	java.util.stream.Stream<java.net.URL>	resources	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0008	java.lang.ClassLoader	public static	java.lang.ClassLoader	getPlatformClassLoader	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0009	java.lang.ClassLoader	public final	java.lang.ClassLoader	getParent	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0010	java.lang.ClassLoader	public static	java.util.Enumeration<java.net.URL>	getSystemResources	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0011	java.lang.ClassLoader	public	java.io.InputStream	getResourceAsStream	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0012	java.lang.ClassLoader	public final	java.lang.Module	getUnnamedModule	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0013	java.lang.ClassLoader	public final	java.lang.Package[]	getDefinedPackages	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0014	java.lang.ClassLoader	public	void	clearAssertionStatus	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0015	java.lang.ClassLoader	public final	java.lang.Package	getDefinedPackage	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0016	java.lang.ClassLoader	public	void	setClassAssertionStatus	false	2			java.lang.String,boolean	arg0,arg1
+java.lang.ClassLoader	MMMMM	00000001	0017	java.lang.ClassLoader	public native	int	hashCode	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0018	java.lang.ClassLoader	public	java.util.Enumeration<java.net.URL>	getResources	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0019	java.lang.ClassLoader	public final	boolean	isRegisteredAsParallelCapable	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0020	java.lang.ClassLoader	public	void	setDefaultAssertionStatus	false	1			boolean	arg0
+java.lang.ClassLoader	MMMMM	00000001	0021	java.lang.ClassLoader	public final native	void	notify	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0022	java.lang.ClassLoader	public	void	setPackageAssertionStatus	false	2			java.lang.String,boolean	arg0,arg1
+java.lang.ClassLoader	MMMMM	00000001	0023	java.lang.ClassLoader	public	java.lang.String	getName	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0024	java.lang.ClassLoader	public final native	void	wait	false	1			long	arg0
+java.lang.ClassLoader	MMMMM	00000001	0025	java.lang.ClassLoader	public final	void	wait	false	2			long,int	arg0,arg1
+java.lang.ClassLoader	MMMMM	00000001	0026	java.lang.ClassLoader	public final	void	wait	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0027	java.lang.ClassLoader	public	java.net.URL	getResource	false	1			java.lang.String	arg0
+java.lang.ClassLoader	MMMMM	00000001	0028	java.lang.ClassLoader	public final native	java.lang.Class<?>	getClass	false	0				
+java.lang.ClassLoader	MMMMM	00000001	0029	java.lang.ClassLoader	public final native	void	notifyAll	false	0				

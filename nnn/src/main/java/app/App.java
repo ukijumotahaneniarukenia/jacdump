@@ -24,6 +24,8 @@ public class App {
     private static final String F = "---";
     private static final String R = "###";
     private static final String C = ",";
+    private static final String S = "/";
+    private static final String D = ".";
     private static final String CONST_SIGN = "CCCCC";
     private static final String METHOD_SIGN = "MMMMM";
     private static final String CLASS_GRP_DIGIT = "%08d";
@@ -51,6 +53,7 @@ public class App {
     private static final String OPTION_ARGUMENTS_CONSTANT = "--constant";
     private static final String OPTION_ARGUMENTS_METHOD = "--method";
     private static final String OPTION_ARGUMENTS_LIST_UP = "--list-up";
+    private static final String OPTION_ARGUMENTS_HELP = "--help";
     private static String DEFAULT_OUTPUT = OPTION_ARGUMENTS_CONSTANT;
 
     private static List<String> OPTION_USAGE_CLASSFILE_LIST = new LinkedList(){{
@@ -130,7 +133,7 @@ public class App {
             ++cnt;
             rt.put(entryClass.getValue()+F+METHOD_SIGN+F+String.format(CLASS_GRP_DIGIT,grp)+F+String.format(CLASS_GRP_SEQ_DIGIT,cnt)
                     ,Arrays.asList(
-                            entryMethod.getValue(). getName() //クラス名
+                            entryMethod.getValue().getName() //クラス名
                             ,Modifier.toString(entryMethod.getKey().getModifiers()) //アクセス修飾子
                             ,entryMethod.getKey().getGenericReturnType().getTypeName() //戻り値の型
                             ,entryMethod.getKey().getName() //メソッド名
@@ -178,10 +181,6 @@ public class App {
         System.exit(0);
     }
 
-    private static boolean isCorrectArg(String arg){
-        return ! arg.contains("java");
-    }
-
     private static List<String> getClassFileSystemList(){
 
         List<String> classFileSystemList = new LinkedList<>();
@@ -213,6 +212,9 @@ public class App {
     private static void outputClassFileSystemList(){
 
         getClassFileSystemList().stream().sorted().forEach(classFile->{
+
+            classFile = classFile.replace(S,D);
+
             System.out.println(classFile);
         });
 
@@ -233,6 +235,9 @@ public class App {
         //出力情報の制御
         for(String arg : cmdLineList){
             switch (arg){
+                case OPTION_ARGUMENTS_HELP:
+                    Usage();
+                    break;
                 case OPTION_ARGUMENTS_CONSTANT:
                     DEFAULT_OUTPUT = OPTION_ARGUMENTS_CONSTANT;
                     break;
@@ -252,10 +257,6 @@ public class App {
             classFileList = classFileUserList;
         }
 
-        if(classFileList.stream().filter(e->isCorrectArg(e)).count() >= 1L){
-            Usage();
-        }
-
         int cnt = classFileList.size();
 
         List<Map<Class<?>,String>> loadClassFileNameMapList = new LinkedList<>();
@@ -270,7 +271,7 @@ public class App {
         for(int i = 0;i < cnt;i++){
 
             String classFile = classFileList.get(i);
-            String className = classFile.replace('/', '.').replaceAll(".class$", "");
+            String className = classFile.replace(S, D).replaceAll(".class$", "");
 
             try{
 
